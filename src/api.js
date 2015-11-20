@@ -1,3 +1,5 @@
+import flatten from 'flatten';
+import fs from 'fs';
 import globby from 'globby';
 import mkdirp from 'mkdirp';
 import path from 'path';
@@ -86,7 +88,7 @@ const destination = (src, dir) => {
  * @return {Array}
  */
 const findSources = patterns =>
-  globby.sync(patterns).filter(f => path.extname(f) === '.json');
+  flatten(globby.sync(patterns).filter(f => path.extname(f) === '.json'));
 
 /**
  * Process an array of source .json files into an optional dir, output
@@ -99,13 +101,25 @@ const findSources = patterns =>
  */
 const processSources = (srces, dir) =>
   srces.map(src => {
-    let dest = destination(src);
+    let dest = destination(src, dir);
+
+    // Here, we parse and then re-stringify the file contents to ensure
+    // they are valid JSON.
+    let json = JSON.parse(fs.readFileSync(src, 'utf8'));
+    let lang = path.basename(src, '.json');
+    let data = JSON.stringify(json, null, '  ');
+
+    fs.writeFileSync(dest, `videojs.addLanguage('${lang}', ${data});`);
+
     return dest;
   });
 
 /**
  * Convert any number of target files or directories (filtering down to
  * only `.json`) into executable `.js` files.
+ *
+ * File names should match the language they are in. For example, a French
+ * file should be fr.json.
  *
  * @param  {Array|String} patterns
  *         One or more `minimatch` patterns.
@@ -116,8 +130,8 @@ const processSources = (srces, dir) =>
  *         to create it. If not provided or creation fails, converted .js
  *         files will be placed alongside their .json sources.
  *
- * @return {Promise}
- *         A promise which resolves with the paths that were converted.
+ * @return {Object}
+ *         An object with `srces` and `dests` arrays.
  */
 export const convert = (patterns, dir) => {
   let srces = findSources(normalizePatterns(patterns));
