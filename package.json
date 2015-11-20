@@ -36,7 +36,10 @@
     "watch": "mkdir -p es5 && babel -w src -d es5"
   },
   "dependencies": {
-    "cli": "^0.11.1"
+    "cli": "^0.11.1",
+    "globby": "^4.0.0",
+    "mkdirp": "^0.5.1",
+    "tsml": "^1.0.1"
   },
   "devDependencies": {
     "babel": "^5.8.0",
