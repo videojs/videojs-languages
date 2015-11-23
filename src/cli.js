@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import cli from 'cli';
-import tsml from 'tsml';
 import {convert} from './api';
 
 cli.enable('help', 'status', 'version');

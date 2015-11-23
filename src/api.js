@@ -12,7 +12,7 @@ import path from 'path';
  * @return {Boolean}
  */
 const nonEmptyStr = v =>
-  typeof v === 'string' && /\S/.test(v);
+  typeof v === 'string' && (/\S/).test(v);
 
 /**
  * Normalize a patterns string/array into an array of non-empty strings,
@@ -43,7 +43,7 @@ const normalizePatterns = patterns => {
  *
  * @private
  * @param  {String} [dir]
- * @return {String|null}
+ * @return {String|undefined}
  */
 const normalizeDir = dir => {
   if (nonEmptyStr(dir)) {
@@ -52,12 +52,14 @@ const normalizeDir = dir => {
       // mkdirp will do nothing if the directory exists or it will create
       // it if it does not. The only reason it should fail is if the
       // Node process can't write to the path for whatever reason. In that
-      // case, we catch and treat the dir as invalid (null).
+      // case, we catch and treat the dir as invalid.
       mkdirp.sync(dir);
       return dir;
-    } catch (x) {}
+    } catch (x) {
+      return;
+    }
   }
-  return null;
+  return;
 };
 
 /**
@@ -136,6 +138,6 @@ const processSources = (srces, dir) =>
 export const convert = (patterns, dir) => {
   let srces = findSources(normalizePatterns(patterns));
   let dests = processSources(srces, normalizeDir(dir));
+
   return {srces, dests};
 };
-

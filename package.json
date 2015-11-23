@@ -24,7 +24,7 @@
   "scripts": {
     "docs": "npm-run-all -p docs:toc docs:api",
     "docs:api": "documentation src/*.js -f html -o docs/api",
-    "lint": "standard .",
+    "lint": "standard",
     "preversion": "./scripts/npm-preversion.sh",
     "postversion": "./scripts/npm-postversion.sh",
     "prepublish": "npm run build",
@@ -38,8 +38,7 @@
     "cli": "^0.11.1",
     "flatten": "0.0.1",
     "globby": "^4.0.0",
-    "mkdirp": "^0.5.1",
-    "tsml": "^1.0.1"
+    "mkdirp": "^0.5.1"
   },
   "devDependencies": {
     "babel": "^5.8.0",
