@@ -49,9 +49,9 @@ $ vjslang --help
 There is a very simple programmatic API that can be used in your own programs. It is used like this:
 
 ```js
-import {convert} from 'videojs-languages';
+import convert from 'videojs-languages';
 
-convert(['foo/bar.json', 'baz/*.json'], {dir: 'langs'});
+convert(['foo/bar.json', 'baz/*.json'], 'langs');
 ```
 
 ## License
