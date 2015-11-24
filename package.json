@@ -18,21 +18,25 @@
     "ignore": [
       "bin",
       "docs",
-      "es5"
+      "es5",
+      "es5-test"
     ]
   },
   "scripts": {
+    "build": "npm-run-all build:js build:test",
+    "build:js": "rm -rf es5 && mkdir -p es5 && babel src -d es5 && chmod 755 es5/cli.js",
+    "build:test": "rm -rf es5-test && mkdir -p es5-test && babel test -d es5-test",
     "docs": "npm-run-all -p docs:toc docs:api",
     "docs:api": "documentation src/*.js -f html -o docs/api",
     "lint": "standard",
+    "prepublish": "npm run build",
+    "pretest": "npm run build",
+    "test": "mocha -u tdd es5-test/*.test.js",
     "preversion": "./scripts/npm-preversion.sh",
     "postversion": "./scripts/npm-postversion.sh",
-    "prepublish": "npm run build",
-    "prebuild": "rm -rf es5",
-    "build": "mkdir -p es5 && babel src -d es5 && chmod 755 es5/cli.js",
-    "pretest": "npm run lint",
-    "test": "",
-    "watch": "mkdir -p es5 && babel -w src -d es5"
+    "watch": "npm-run-all -p watch:js watch:test",
+    "watch:js": "rm -rf es5 && mkdir -p es5 && babel -w src -d es5",
+    "watch:test": "rm -rf es5-test && mkdir -p es5-test && babel -w test -d es5-test"
   },
   "dependencies": {
     "cli": "^0.11.1",
@@ -42,9 +46,13 @@
   },
   "devDependencies": {
     "babel": "^5.8.0",
+    "chai": "^3.4.1",
     "doctoc": "^0.15.0",
     "documentation": "^3.0.0",
+    "mocha": "^2.3.4",
+    "mock-fs": "^3.4.0",
     "npm-run-all": "~1.2.0",
+    "tsmlb": "^1.0.0",
     "videojs-standard": "^3.7.0"
   }
 }

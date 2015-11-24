@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import cli from 'cli';
-import {convert} from './api';
+import convert from './api';
 
 cli.enable('help', 'status', 'version');
 
@@ -25,5 +25,9 @@ cli.main(function(args, options) {
   let conversions = result.srces.map((s, i) => `${s} => ${result.dests[i]}`);
   let sep = '\n  ';
 
-  this.ok(`videojs-language conversion complete: ${sep + conversions.join(sep)}`);
+  if (conversions.length) {
+    this.ok(`videojs-language: conversion complete: ${sep + conversions.join(sep)}`);
+  } else {
+    this.info('videojs-language: nothing to convert');
+  }
 });
