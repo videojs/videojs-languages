@@ -32,8 +32,7 @@
     "prepublish": "npm run build",
     "pretest": "npm run build",
     "test": "mocha -u tdd es5-test/*.test.js",
-    "preversion": "./scripts/npm-preversion.sh",
-    "postversion": "./scripts/npm-postversion.sh",
+    "preversion": "npm test",
     "watch": "npm-run-all -p watch:js watch:test",
     "watch:js": "rm -rf es5 && mkdir -p es5 && babel -w src -d es5",
     "watch:test": "rm -rf es5-test && mkdir -p es5-test && babel -w test -d es5-test"
