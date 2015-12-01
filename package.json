@@ -2,7 +2,7 @@
   "name": "videojs-languages",
   "author": "Brightcove, Inc.",
   "license": "Apache-2.0",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "es5/api.js",
   "bin": {
     "vjslang": "es5/cli.js"
