@@ -1,9 +1,9 @@
-import {
+const {
   normalizePatterns,
   normalizeDir,
   findSources,
   processSources
-} from './lib';
+} = require('./lib');
 
 /**
  * Convert any number of target files or directories (filtering down to
@@ -31,4 +31,4 @@ const convert = (patterns, dir) => {
   return {srces, dests};
 };
 
-export default convert;
+module.exports = convert;

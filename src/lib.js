@@ -1,8 +1,8 @@
-import flatten from 'flatten';
-import fs from 'fs';
-import globby from 'globby';
-import mkdirp from 'mkdirp';
-import path from 'path';
+const flatten = require('flatten');
+const fs = require('fs');
+const globby = require('globby');
+const mkdirp = require('mkdirp');
+const path = require('path');
 
 /**
  * Determines if a value is a non-empty string.
@@ -116,7 +116,7 @@ const processSources = (srces, dir) =>
     return dest;
   });
 
-export {
+module.exports = {
   nonEmptyStr,
   normalizePatterns,
   normalizeDir,

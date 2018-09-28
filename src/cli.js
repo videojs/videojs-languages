@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import cli from 'cli';
-import convert from './api';
+const cli = require('cli');
+const convert = require('./api');
 
 cli.enable('help', 'status', 'version');
 

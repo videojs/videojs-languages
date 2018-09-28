@@ -1,11 +1,11 @@
 /* global suite, setup, teardown, test */
 
-import {assert} from 'chai';
-import fs from 'fs';
-import mock from 'mock-fs';
-import tsmlb from 'tsmlb';
+const {assert} = require('chai');
+const fs = require('fs');
+const mock = require('mock-fs');
+const tsmlb = require('tsmlb');
 
-import convert from '../es5/api';
+const convert = require('../src/api');
 
 suite('api', () => {
 
