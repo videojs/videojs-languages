@@ -83,7 +83,7 @@ suite('lib', () => {
   });
 
   test('processSources', () => {
-    let srces = processSources(findSources(['a/**/*']), normalizeDir('c'));
+    const srces = processSources(findSources(['a/**/*']), normalizeDir('c'));
 
     assert.sameMembers(srces, ['c/x.js', 'c/y.js']);
 

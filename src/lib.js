@@ -9,7 +9,7 @@ import path from 'path';
  *
  * @private
  * @param  {Mixed} v
- * @return {Boolean}
+ * @return {boolean}
  */
 const nonEmptyStr = v =>
   typeof v === 'string' && (/\S/).test(v);
@@ -19,7 +19,7 @@ const nonEmptyStr = v =>
  * defaulting to ["lang/*.json"].
  *
  * @private
- * @param  {Array|String} patterns
+ * @param  {Array|string} patterns
  * @return {Array}
  */
 const normalizePatterns = patterns => {
@@ -42,8 +42,8 @@ const normalizePatterns = patterns => {
  * Normalize a directory by verifying that it exists - or returning null.
  *
  * @private
- * @param  {String} [dir]
- * @return {String|undefined}
+ * @param  {string} [dir]
+ * @return {string|undefined}
  */
 const normalizeDir = dir => {
   if (nonEmptyStr(dir)) {
@@ -67,14 +67,14 @@ const normalizeDir = dir => {
  * directory and returns an array of destination .js files.
  *
  * @private
- * @param  {String} src
- * @param  {String|null} dir
- * @return {String}
+ * @param  {string} src
+ * @param  {string|null} dir
+ * @return {string}
  *         The path to the destination .js file.
  */
 const destination = (src, dir) => {
-  let d = dir || path.dirname(src);
-  let bn = path.basename(src);
+  const d = dir || path.dirname(src);
+  const bn = path.basename(src);
 
   // We can assume the basename ends in ".json", so we only need to pop
   // off the "on" to get the proper extension.
@@ -98,18 +98,18 @@ const findSources = patterns =>
  *
  * @private
  * @param  {Array} srces
- * @param  {String|null} dir
+ * @param  {string|null} dir
  * @return {Array}
  */
 const processSources = (srces, dir) =>
   srces.map(src => {
-    let dest = destination(src, dir);
+    const dest = destination(src, dir);
 
     // Here, we parse and then re-stringify the file contents to ensure
     // they are valid JSON.
-    let json = JSON.parse(fs.readFileSync(src, 'utf8'));
-    let lang = path.basename(src, '.json');
-    let data = JSON.stringify(json, null, '  ');
+    const json = JSON.parse(fs.readFileSync(src, 'utf8'));
+    const lang = path.basename(src, '.json');
+    const data = JSON.stringify(json, null, '  ');
 
     fs.writeFileSync(dest, `videojs.addLanguage('${lang}', ${data});`);
 

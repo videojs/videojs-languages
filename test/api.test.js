@@ -30,7 +30,7 @@ suite('api', () => {
   });
 
   test('convert', () => {
-    let result = convert(['a/**/*', 'b/*.json'], 'c');
+    const result = convert(['a/**/*', 'b/*.json'], 'c');
 
     assert.sameMembers(result.srces, ['a/b/x.json', 'a/b/y.json', 'b/z.json']);
     assert.sameMembers(result.dests, ['c/x.js', 'c/y.js', 'c/z.js']);

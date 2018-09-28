@@ -31,3 +31,4 @@ node_modules/
 docs/api/
 es5/
 es5-test/
+.eslintcache
