@@ -1,11 +1,11 @@
 /* global suite, setup, teardown, test */
 
-import {assert} from 'chai';
-import fs from 'fs';
-import mock from 'mock-fs';
-import tsmlb from 'tsmlb';
+const {assert} = require('chai');
+const fs = require('fs');
+const mock = require('mock-fs');
+const tsmlb = require('tsmlb');
 
-import convert from '../es5/api';
+const convert = require('../src/api');
 
 suite('api', () => {
 
@@ -30,7 +30,7 @@ suite('api', () => {
   });
 
   test('convert', () => {
-    let result = convert(['a/**/*', 'b/*.json'], 'c');
+    const result = convert(['a/**/*', 'b/*.json'], 'c');
 
     assert.sameMembers(result.srces, ['a/b/x.json', 'a/b/y.json', 'b/z.json']);
     assert.sameMembers(result.dests, ['c/x.js', 'c/y.js', 'c/z.js']);

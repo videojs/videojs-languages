@@ -1,18 +1,18 @@
 /* global suite, setup, teardown, test */
 
-import {assert} from 'chai';
-import fs from 'fs';
-import mock from 'mock-fs';
-import tsmlb from 'tsmlb';
+const {assert} = require('chai');
+const fs = require('fs');
+const mock = require('mock-fs');
+const tsmlb = require('tsmlb');
 
-import {
+const {
   nonEmptyStr,
   normalizePatterns,
   normalizeDir,
   destination,
   findSources,
   processSources
-} from '../es5/lib';
+} = require('../src/lib');
 
 suite('lib', () => {
 
@@ -83,7 +83,7 @@ suite('lib', () => {
   });
 
   test('processSources', () => {
-    let srces = processSources(findSources(['a/**/*']), normalizeDir('c'));
+    const srces = processSources(findSources(['a/**/*']), normalizeDir('c'));
 
     assert.sameMembers(srces, ['c/x.js', 'c/y.js']);
 

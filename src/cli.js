@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import cli from 'cli';
-import convert from './api';
+const cli = require('cli');
+const convert = require('./api');
 
 cli.enable('help', 'status', 'version');
 
@@ -21,9 +21,9 @@ cli.parse({
 cli.main(function(args, options) {
   this.debug(`args: ${JSON.stringify(args)}, options: ${JSON.stringify(options)}`);
 
-  let result = convert(args, options.dir);
-  let conversions = result.srces.map((s, i) => `${s} => ${result.dests[i]}`);
-  let sep = '\n  ';
+  const result = convert(args, options.dir);
+  const conversions = result.srces.map((s, i) => `${s} => ${result.dests[i]}`);
+  const sep = '\n  ';
 
   if (conversions.length) {
     this.ok(`videojs-language: conversion complete: ${sep + conversions.join(sep)}`);
