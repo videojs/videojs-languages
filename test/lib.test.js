@@ -12,7 +12,7 @@ const {
   destination,
   findSources,
   processSources
-} = require('../es5/lib');
+} = require('../src/lib');
 
 suite('lib', () => {
 
