@@ -71,8 +71,6 @@ suite('lib', () => {
   });
 
   test('findSources', () => {
-    assert.lengthOf(findSources(), 0);
-
     assert.sameMembers(
       findSources(['a/**/*']),
       ['a/b/x.json', 'a/b/y.json']
