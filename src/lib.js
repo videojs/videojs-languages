@@ -72,13 +72,13 @@ const normalizeDir = dir => {
  * @return {string}
  *         The path to the destination .js file.
  */
-const destination = (src, dir) => {
+const destination = (src, dir, ext = 'js') => {
   const d = dir || path.dirname(src);
   const bn = path.basename(src);
 
   // We can assume the basename ends in ".json", so we only need to pop
   // off the "on" to get the proper extension.
-  return path.join(d, bn.substr(0, bn.length - 2));
+  return path.join(d, bn.substr(0, bn.length - 4) + ext);
 };
 
 /**
@@ -101,9 +101,9 @@ const findSources = patterns =>
  * @param  {string|null} dir
  * @return {Array}
  */
-const processSources = (srces, dir) =>
+const processSources = (srces, dir, asModule) =>
   srces.map(src => {
-    const dest = destination(src, dir);
+    const dest = destination(src, dir, asModule ? 'mjs' : 'js');
 
     // Here, we parse and then re-stringify the file contents to ensure
     // they are valid JSON.
@@ -111,7 +111,20 @@ const processSources = (srces, dir) =>
     const lang = path.basename(src, '.json');
     const data = JSON.stringify(json, null, '  ');
 
-    fs.writeFileSync(dest, `videojs.addLanguage('${lang}', ${data});`);
+    if (asModule) {
+      const relativeSource = path.relative(dir, src);
+      const contents = [
+        'import videojs from "video.js";',
+        `import ${lang} from "${relativeSource}";`,
+        '',
+        `videojs.addLanguage('${lang}', ${lang});`,
+        ''
+      ].join('\n');
+
+      fs.writeFileSync(dest, contents);
+    } else {
+      fs.writeFileSync(dest, `videojs.addLanguage('${lang}', ${data});`);
+    }
 
     return dest;
   });

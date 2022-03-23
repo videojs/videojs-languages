@@ -15,13 +15,18 @@ cli.parse({
       'files will be placed alongside their .json sources.'
     ].join(' '),
     'string'
+  ],
+  asModule: [
+    'm',
+    'Create a module for ES import.',
+    'bool'
   ]
 });
 
 cli.main(function(args, options) {
   this.debug(`args: ${JSON.stringify(args)}, options: ${JSON.stringify(options)}`);
 
-  const result = convert(args, options.dir);
+  const result = convert(args, options.dir, options.asModule);
   const conversions = result.srces.map((s, i) => `${s} => ${result.dests[i]}`);
   const sep = '\n  ';
 
