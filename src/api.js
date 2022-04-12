@@ -21,12 +21,15 @@ const {
  *         to create it. If not provided or creation fails, converted .js
  *         files will be placed alongside their .json sources.
  *
+ * @param  {boolean} [asModule]
+ *         Create as an ES module
+ *
  * @return {Object}
  *         An object with `srces` and `dests` arrays.
  */
-const convert = (patterns, dir) => {
+const convert = (patterns, dir, asModule) => {
   const srces = findSources(normalizePatterns(patterns));
-  const dests = processSources(srces, normalizeDir(dir));
+  const dests = processSources(srces, normalizeDir(dir), asModule);
 
   return {srces, dests};
 };

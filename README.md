@@ -6,6 +6,7 @@
   - [Installation](#installation)
   - [CLI Usage](#cli-usage)
     - [Specifying a Destination Directory](#specifying-a-destination-directory)
+    - [Create as an ES module](#create-as-an-es-module)
     - [Options](#options)
   - [API Usage](#api-usage)
   - [License](#license)
@@ -56,9 +57,17 @@ $ vjslang foo/bar.json --dir baz
 
 The directory will be created if it does not exist. If creation fails, `vjslang` will fall back to its default behavior.
 
+### Create as an ES module
+
+The `--asModule`/`-m` option creates an .mjs moduel file which can be directly imported.
+
+```sh
+$ vjslang foo/bar.json --dir baz --asModule
+```
+
 ### Options
 
-The `--dir`/`-d` option is the most interesting/useful. For full option documentation refer to:
+The `--dir`/`-d` and `--asModule`/`-m` options are the most interesting/useful. For full option documentation refer to:
 
 ```sh
 $ vjslang --help
@@ -71,7 +80,9 @@ There is a very simple programmatic API that can be used in your own programs. I
 ```js
 import convert from 'videojs-languages';
 
-convert(['foo/bar.json', 'baz/*.json'], 'langs');
+const asModule = true;
+
+convert(['foo/bar.json', 'baz/*.json'], 'langs', asModule);
 ```
 
 ## License

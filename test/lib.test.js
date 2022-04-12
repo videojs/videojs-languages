@@ -68,6 +68,7 @@ suite('lib', () => {
       destination('/path/to/foo.json', '/other/path'),
       '/other/path/foo.js'
     );
+    assert.strictEqual(destination('/path/to/foo.json', null, 'mjs'), '/path/to/foo.mjs');
   });
 
   test('findSources', () => {
@@ -103,6 +104,32 @@ suite('lib', () => {
           "y": true
         });
       `
+    );
+  });
+
+  test('processSourcesAsModules', () => {
+    const srces = processSources(findSources(['a/**/*']), normalizeDir('c'), true);
+
+    assert.sameMembers(srces, ['c/x.mjs', 'c/y.mjs']);
+
+    assert.strictEqual(
+      fs.readFileSync('c/x.mjs', 'utf8'),
+      tsmlb`
+        import videojs from "video.js";
+        import x from "../a/b/x.json";
+
+        videojs.addLanguage('x', x);
+      ` + '\n'
+    );
+
+    assert.strictEqual(
+      fs.readFileSync('c/y.mjs', 'utf8'),
+      tsmlb`
+        import videojs from "video.js";
+        import y from "../a/b/y.json";
+
+        videojs.addLanguage('y', y);
+      ` + '\n'
     );
   });
 });
